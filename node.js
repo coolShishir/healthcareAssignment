@@ -126,6 +126,39 @@ app.get('/findAllDoctors', function(req, res) {
   });
 })
 
+app.put('/findAllVisits', function(req, res) {
+  mongo.MongoClient.connect(mongodbUri, function(err, db) {
+  assert.equal(null, err);
+  console.log(req.body.patientName)
+  db.collection('visits').find({patientName:req.body.patientName}).toArray(function(err, docs) {
+      console.log( docs.length ); 
+      res.end(JSON.stringify(docs))
+      });
+  });
+})
+
+app.put('/findAllVisitsDoctor', function(req, res) {
+  mongo.MongoClient.connect(mongodbUri, function(err, db) {
+  assert.equal(null, err);
+  console.log(req.body.doctorName)
+  db.collection('visits').find({doctorName:req.body.doctorName}).toArray(function(err, docs) {
+      console.log( docs.length ); 
+      res.end(JSON.stringify(docs))
+      });
+  });
+})
+
+app.put('/findRatingOfDoctor', function(req, res) {
+  mongo.MongoClient.connect(mongodbUri, function(err, db) {
+  assert.equal(null, err);
+  console.log(req.body.doctorName)
+  db.collection('visits').find({doctorName:req.body.doctorName}).toArray(function(err, docs) {
+      console.log( docs.length ); 
+      res.end(JSON.stringify(docs))
+      });
+  });
+})
+
 app.put('/loginPatient', function(req, res) {
   mongo.MongoClient.connect(mongodbUri, function(err, db) {
   assert.equal(null, err);
