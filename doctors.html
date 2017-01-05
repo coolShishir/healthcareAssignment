@@ -1,0 +1,77 @@
+      
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html ng-app="App">
+<head>
+<title>Doctors</title>
+<link rel="stylesheet"
+  href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<script
+  src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script
+  src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script
+  src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
+</head>
+<!-- Controller name goes here -->
+<body ng-controller="CompanyCtrl">
+<br>
+<h1>Search Here<input type="text" ng-model="searchKeyword" ></h1>
+  <table class="table">
+    <tr>
+      <th>
+        <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse"> Name
+          <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+        </a>
+      </th>
+      <th>Visit Date
+      </th>
+      <th>Age
+      </th>
+      <th>Disease
+      </th>
+      <th>no of Visits
+      </th>
+
+    </tr>
+    <tr ng-repeat="patient in patients | orderBy:sortType:sortReverse | filter: searchKeyword ">
+      <td>
+        {{patient.name}}
+      </td>
+      <td>
+       {{patient.date}}
+      </td>
+      <td>
+       {{patient.age}}
+      </td>
+      
+      <td>
+       </td>
+        {{patient.disease}}
+       <td>
+       {{patient.noVisits}}
+      </td>
+      <td>
+      <input type="button" value="Increment Visit" class="btn btn-primary" ng-click="incrementVisit(patient.name)"/>
+      </td>
+    </tr>
+  </table>
+
+  <script>
+    var helloApp = angular.module("App", []);
+    helloApp.controller("CompanyCtrl", function($scope) {
+    $scope.patients = [];
+
+    $scope.sortType  = 'name';
+    $scope.sortReverse  = false;
+
+
+
+
+
+
+    })
+    </script>
+      
+</body>
+</html>

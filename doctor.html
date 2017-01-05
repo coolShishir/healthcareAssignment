@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <title>HealthCare System</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+  </head>
+  <body>
+
+    <div ng-app="admin" ng-controller="doctorController">
+    <h2>Enter your Credentials</h2>
+      <p>Enter  EmailId: <input type="text" ng-model="emailIdDoctor"></p>
+      <p>Enter Password: <input type="text" ng-model="passwordDoctor"></p>
+
+      <input type="button" class="btn btn-primary btn-lg" ng-click="doctorValidation()" value="Login">
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+    
+    <script>
+          
+      var app = angular.module('admin',[]);
+      app.controller('doctorController', function($scope,$http,$window){
+         
+          $scope.doctorValidation = function(){
+             var data = {
+              emailId: $scope.emailIdDoctor,
+              password: $scope.passwordDoctor
+            };
+            $http({url : 'http://127.0.0.1:3000/loginDoctor/', method : "put" , data} ). then ( function(response){if ( response.data == "0") $window.alert("Sorry , Invalid Credentials , try again")
+              else { $window.alert("Congrats, You are logged in ")
+
+                      window.location = "http://localhost:3000/doctors"
+                      var doctor = response.data[0]
+                      console.log(response.data[0])
+                  }
+            });
+          };
+        });
+
+    </script>
+  </body>
+</html>

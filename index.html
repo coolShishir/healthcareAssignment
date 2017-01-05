@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+  <head>
+    <title>HealthCare System</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+  </head>
+  <style>
+         body  {
+            background-image: url("/background.jpg");
+         }
+  </style>
+
+    <div align="centre" ng-app="myApp" ng-controller="mainController">
+      <h2>HealthCare System</h2>
+      <br>
+      <br>
+      <br>
+      <h6>Login As </h6>
+      <input type="button" class="btn btn-primary btn-lg" ng-click="doctor()" value="doctor">
+      <input type="button" class="btn btn-primary btn-lg" ng-click="patient()" value="patient">
+
+      <h6> Not registered yet ? </h6>
+      <input type="button" class="btn btn-primary btn-lg" ng-click="signUp()" value="signUp">
+
+      <br>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+
+    <script type="text/javascript">
+       var app = angular.module('myApp',['ngRoute']);
+        
+        app.config(function($routeProvider) {
+        $routeProvider
+          .when("/", {
+          templateUrl : 'index.html'
+          })
+          .when("/doctor", {
+          templateUrl : 'doctor.html'
+          })
+          .when("/patient",{
+            templateUrl : 'patient.html'
+          })
+          .when("/signUp",{
+            templateUrl : 'signUp.html'
+          })
+          .when("/doctors",{
+            templateUrl : 'doctors.html'
+          })
+          .when("/patients",{
+            templateUrl : 'patients.html'
+          })
+
+        });
+        
+        app.controller('mainController', function($scope,$http){
+
+          $scope.doctor = function(){
+            window.location = "http://localhost:3000/doctor"
+          }
+
+          $scope.patient = function(){
+            window.location = "http://localhost:3000/patient"
+          }
+
+          $scope.signUp = function(){
+            window.location = "http://localhost:3000/signUp"
+          }
+
+        });
+    </script>
+
+   
+
+  </body>
+</html>

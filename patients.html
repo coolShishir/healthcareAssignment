@@ -1,0 +1,160 @@
+      
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html ng-app="helloApp">
+<head>
+<title></title>
+<link rel="stylesheet"
+  href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<script
+  src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script
+  src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script
+  src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
+</head>
+<!-- Controller name goes here -->
+<body ng-controller="CompanyCtrl">
+  <h3>Search Here <input type="text" ng-model="searchKeyword" ></h3>
+  <h4>Doctor Directory </h4>
+
+  <h4> click on schema to sort </h4>
+  <table class="table">
+    <tr>
+      <th>
+        <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse"> Name
+          <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+        </a>
+      </th>
+      <th> <a href="#" ng-click="sortType = 'noOfVisits'; sortReverse = !sortReverse"> no of visits
+          <span ng-show="sortType == 'noOfVisits' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'noOfVisits' && sortReverse" class="fa fa-caret-up"></span>
+        </a>
+      </th>
+      <th> <a href="#" ng-click="sortType = 'speciality'; sortReverse = !sortReverse"> speciality
+          <span ng-show="sortType == 'speciality' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'speciality' && sortReverse" class="fa fa-caret-up"></span>
+        </a>
+      </th>
+      <th><a href="#" ng-click="sortType = 'rating'; sortReverse = !sortReverse"> Rating
+          <span ng-show="sortType == 'rating' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'rating' && sortReverse" class="fa fa-caret-up"></span>
+        </a>
+      </th>
+      <th>Address
+      </th>
+      <th>emailId
+      </th>
+      <th><a href="#" ng-click="sortType = 'fee'; sortReverse = !sortReverse"> fee
+          <span ng-show="sortType == 'fee' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'fee' && sortReverse" class="fa fa-caret-up"></span>
+      </th>
+
+    </tr>
+    <tr ng-repeat="doctor in doctors | orderBy:sortType:sortReverse | filter: searchKeyword">
+      <td>
+        {{doctor.name}}
+      </td>
+      <td>
+       {{doctor.noOfVisits}}
+      </td>
+      <td>
+       {{doctor.speciality}}
+      </td>
+      
+      <td>
+       {{doctor.rating}}
+      </td>
+      
+      <td>
+       {{doctor.address}}
+      </td>
+
+      <td>
+       {{doctor.emailId}}
+      </td>
+
+      <td>
+       {{doctor.fee}}
+      </td>
+    </tr>
+  </table>
+
+  <p>Enter Doctor Name <input type="text" ng-model="doctorName"></p> 
+  <p>Enter Rating <input type="text" ng-model="rating"></p> 
+   <p>Enter Patient Name <input type="text" ng-model="patientName"></p> 
+  <input type="button" value="Make a visit" class="btn btn-primary" ng-click="markVisit()"/>
+  
+
+  <script>
+    var helloApp = angular.module("helloApp", []);
+
+    helloApp.controller("CompanyCtrl", function($scope,$http) {
+    $scope.doctors = [];
+    $scope.visits = [];
+
+    $scope.sortType  = 'name';
+    $scope.sortReverse  = false;
+    $scope.doctorList = {};
+    $scope.doctorName = ""
+    $scope.rating = ""
+
+    $scope.doctorName = "";
+    $scope.patientName = "";
+    $scope.rating = 0;
+    $scope.date = ""
+
+
+    $scope.findAll = function(){
+      $http({url : 'http://127.0.0.1:3000/findAllDoctors', method : "get" } ).then ( function(response){
+            for ( i = 0 ; i < response.data.length ; i++ ) {
+              $scope.doctors[i] = response.data[i]
+            }
+        }
+      );
+    };
+
+    $scope.markVisit = function(){
+      $scope.date = new Date();
+      var data2 = {
+              doctorName: $scope.doctorName,
+              patientName: $scope.emailIdPatient,
+              rating: $scope.rating,
+              date: $scope.date
+            };
+            console.log(data2);
+             $http({
+              method  : 'POST',
+              url     : 'http://127.0.0.1:3000/addVisit/',
+              data    : data2, //forms user object
+              headers : {'Content-Type': 'application/json'} 
+             })
+              .success(function(data) {
+                if (data.errors) {
+                  console.log("success");
+                } else {
+                  console.log("failue")
+                }
+            });
+    };
+
+    $scope.findVisit = function() {
+      http({url : 'http://127.0.0.1:3000/findAllvisits', method : "get" } ).then ( function(response){
+            for ( i = 0 ; i < response.data.length ; i++ ) {
+              $scope.visits[i] = response.data[i]
+            }
+        }
+      );
+    };
+
+    $scope.findAll();
+    setInterval(function(){
+      $scope.findAll();
+    }, 10000)
+
+    console.log($scope.doctorList)
+  })
+    </script>
+      
+</body>
+</html>
