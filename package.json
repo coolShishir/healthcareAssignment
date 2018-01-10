@@ -1,0 +1,27 @@
+{
+  "name": "healthcare-system",
+  "version": "1.0.0",
+  "description": "# Running Instrucions Go to project Directory    1. install dependencies as per requirement by \"npm install\"   2. run node node.js   3. Go to browser and run \"http://localhost:3000\" in address window",
+  "main": "node.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongodb": "^2.2.12",
+    "nodemailer": "^2.7.0",
+    "socket.io": "^1.7.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CoolShishir/HealthCare-System.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CoolShishir/HealthCare-System/issues"
+  },
+  "homepage": "https://github.com/CoolShishir/HealthCare-System#readme"
+}
